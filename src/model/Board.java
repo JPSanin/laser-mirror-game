@@ -16,7 +16,7 @@ public class Board {
 	private int shots;
 	private int locates;
 	private int errors;
-	//private String viewBoard;
+	private String viewBoard;
 	private Cell firstCell;
 
 	/** 
@@ -32,7 +32,7 @@ public class Board {
 		this.rows = rows;
 		this.columns = columns;
 		this.mirrors = mirrors;
-
+		viewBoard="";
 		mirrorsFound=0;
 		mirrorsAdded=0;
 		shots=0;
@@ -52,6 +52,7 @@ public class Board {
 		addCellsHorizontal(1,1,firstCell);
 		addCellsVertical(2,1,firstCell,firstCell);
 		placeMirrors(firstCell,firstCell);
+		
 	}
 
 
@@ -152,7 +153,13 @@ public class Board {
 	}
 
 	
-	//Trabajar para que siempre llene el tablero
+	/** Method for setting the amount of mirrors randomly <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Adds all mirrors to cells <br>
+	 * @param current, cell representing the current cell that the mirror will be set to
+	 * @param rowHead, cell representing the first cell of the row, it is used to 
+	 * switch rows once all horizontal cells have been traversed
+	 */
 	private void placeMirrors(Cell current, Cell rowHead) {
 		if(mirrorsAdded<mirrors) {
 			if(current.isMirror()==false) {
@@ -163,6 +170,7 @@ public class Board {
 				current.setMirrorDir(mirDir);
 				mirrorsAdded++;
 			}
+			}
 			if((int)(current.getCol()-64)==columns && current.getRow()==rows) {
 				placeMirrors(firstCell,firstCell);
 			}else if((int)(current.getCol()-64)<columns) {
@@ -170,36 +178,35 @@ public class Board {
 			}else if((int)(current.getCol()-64)==columns) {
 				placeMirrors(rowHead.getDown(),rowHead.getDown());
 			}
-			
-			}
 		}
-		
-		
-		//Traverse grid and set cell with mirrors using randoms
-		//	int addMirror=(int)(Math.random()*10+1);
 	}
 
 	public void shoot() {}
 	public void locate() {}
 	public void calculateScore() {}
-
-	public String printBoard() {
+	
+	public String showBoardScreen(String nickname) {
 		String info="";
-		info+=firstCell;
-		info+=firstCell.getRight();
-		info+=firstCell.getRight().getRight();
-		info+=firstCell.getRight().getRight().getRight()+"\n";
-		info+=firstCell.getDown();
-		info+=firstCell.getDown().getRight();
-		info+=firstCell.getDown().getRight().getRight();
-		info+=firstCell.getDown().getRight().getRight().getRight()+"\n";
-		info+=firstCell.getDown().getDown();
-		//info+=firstCell.getDown().getDown().getRight();
-		//info+=firstCell.getDown().getDown().getRight().getRight();
-		//info+=firstCell.getDown().getDown().getRight().getRight().getRight()+"\n";
-
-
+		int remainingMirrors= mirrors-mirrorsFound;
+		info+= nickname+": "+remainingMirrors+ " mirrors remaining\n";
+		printBoard(firstCell,firstCell);
+		info+=viewBoard;
 		return info;
+		
+	}
+
+	private void printBoard(Cell current, Cell rowHead) {
+		
+		if((int)(current.getCol()-64)==columns && current.getRow()==rows) {
+			viewBoard+=current+"\n";
+		}else if((int)(current.getCol()-64)<columns) {
+			viewBoard+=current;
+			printBoard(current.getRight(),rowHead);
+		}else if((int)(current.getCol()-64)==columns) {
+			viewBoard+=current+"\n";
+			printBoard(rowHead.getDown(),rowHead.getDown());
+			
+		}
 	}
 	/**
 	 *Getters and Setters 
@@ -266,6 +273,16 @@ public class Board {
 
 	public void setFirstCell(Cell firstCell) {
 		this.firstCell = firstCell;
+	}
+
+
+	public String getViewBoard() {
+		return viewBoard;
+	}
+
+
+	public void setViewBoard(String viewBoard) {
+		this.viewBoard = viewBoard;
 	}
 
 

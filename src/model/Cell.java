@@ -42,7 +42,19 @@ public class Cell {
 	
 	@Override
 	public String toString() {
-		String info="["+row+col+"]";
+		String info="";
+		if(mirror==true) {
+			if(mirrorDir==1) {
+				info="[/]";
+			}
+			if(mirrorDir==2) {
+				info="[\\]";
+			}
+			
+		}else {
+			info="[ ]";
+		}
+		//info="["+row+col+"]";
 		return info;
 	}
 

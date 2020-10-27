@@ -18,6 +18,7 @@ import model.GameController;
  */
 public class Menu {
 	private GameController gameController;
+	private String playerName;
 	private BufferedReader br;
 	
 	/** 
@@ -91,13 +92,33 @@ public class Menu {
 	
 	<b> pre: </b> <br>
 	<b> post: </b> Starts the game and allows the player to play<br>	
+	 * @throws IOException 
 	*/
-	private void play() {
-		System.out.println("Start Game");
-		gameController.generateBoard();
-		System.out.println(gameController.getGameBoard().printBoard());
+	private void play() throws IOException {
+		generateBoard();
+		
 	}
+	/** Method for reading information to begin playing the game<br>
 	
+	<b> pre: </b> <br>
+	<b> post: </b> Generates the board<br>	
+	 * @throws IOException 
+	*/
+	private void generateBoard() throws IOException {
+		System.out.println("Starting Game...");
+		System.out.println("Please enter the following information in the specified format to begin");
+		System.out.println("Please separate information using commas as shown below");
+		System.out.println("nickname, amount of rows, amount of columns, amount of mirrors");
+		String info[]= br.readLine().split(",");
+		playerName=info[0].trim();
+		int rows= Integer.parseInt(info[1].trim());
+		int columns= Integer.parseInt(info[2].trim());
+		int mirrors= Integer.parseInt(info[3].trim());
+		gameController.generateBoard(rows,columns,mirrors);
+		System.out.println("Generating Board...");
+		System.out.println(gameController.getGameBoard().showBoardScreen(playerName));
+		
+	}
 	/** Method for showing the scores  <br>
 	
 	<b> pre: </b> <br>

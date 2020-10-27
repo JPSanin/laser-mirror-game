@@ -29,9 +29,11 @@ public class GameController {
 	public void shoot() {}
 	public void locate() {}
 	public void addPlayer() {}
-	public void generateBoard() {
-		gameBoard=new Board(2, 3, 2);
+	
+	public void generateBoard(int rows, int columns, int mirrors) {
+		gameBoard=new Board(rows, columns, mirrors);
 		gameBoard.generateBoard();
+		
 	}
 
 	
