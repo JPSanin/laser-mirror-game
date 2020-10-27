@@ -4,17 +4,19 @@ package model;
 
  * @author: Juan P. Sanin
 
- * @version: 1.0 26/10/2020 6:30 PM
+ * @version: 1.1 26/10/2020 
 
  */
 public class Board {
 	private int rows;
 	private int columns;
 	private int mirrors;
+	private int mirrorsAdded;
 	private int mirrorsFound;
 	private int shots;
 	private int locates;
 	private int errors;
+	//private String viewBoard;
 	private Cell firstCell;
 	
 	/** 
@@ -30,18 +32,95 @@ public class Board {
 		this.rows = rows;
 		this.columns = columns;
 		this.mirrors = mirrors;
+	
 		mirrorsFound=0;
+		mirrorsAdded=0;
 		shots=0;
 		locates=0;
 		errors=0;
+		
 	}
 	
-	public void generateBoard() {}
+	public void generateBoard() {
+		addCell(1,1,firstCell);
+	
+	}
+	
+	private void addCell(int rowCounter, int columnCounter,Cell current) {
+		Cell newCell=null;
+		char x= (char)(columnCounter+64);
+		System.out.println("yes");
+		newCell=new Cell(false,3,rowCounter,x);
+		/*if(mirrorsAdded<mirrors) {
+			int addMirror=(int)(Math.random()*10+1);
+			if(addMirror==1) {
+				int mirDir=(int)(Math.random()*2+1);
+				newCell=new Cell(true,mirDir,rowCounter,x);
+				mirrorsAdded++;
+			}else {
+				newCell=new Cell(false,3,rowCounter,x);
+			}
+		}*/
+		
+		if(rowCounter==1) {
+			if(columnCounter==1) {
+				firstCell=newCell;
+				columnCounter++;
+				addCell(rowCounter, columnCounter, firstCell);
+			}else if(columnCounter<columns) {
+				newCell.setLeft(current);
+				current.setRight(newCell);
+				columnCounter++;
+				addCell(rowCounter,columnCounter,newCell);
+			}else if(columnCounter==columns) {
+				newCell.setLeft(current);
+				current.setRight(newCell);
+				columnCounter=1;
+				rowCounter++;
+				addCell(rowCounter,columnCounter,newCell);
+			}
+			
+		}else if(rowCounter>1 && rowCounter<=rows) {
+			if(columnCounter==1) {
+				//Search for upper (row-1,col)
+				//newCell.setUp(searchResult);
+				//searchResult.setDown(newCell);
+				columnCounter++;
+				addCell(rowCounter,columnCounter,newCell);
+				
+			}else if(columnCounter<columns) {
+				//Search for upper (row-1,col)
+				//newCell.setUp(searchResult);
+				//searchResult.setDown(newCell);
+				newCell.setLeft(current);
+				current.setRight(newCell);
+				columnCounter++;
+				addCell(rowCounter,columnCounter,newCell);
+			}else if(columnCounter==columns) {
+				//Search for upper (row-1,col)
+				//newCell.setUp(searchResult);
+				//searchResult.setDown(newCell);
+				newCell.setLeft(current);
+				current.setRight(newCell);
+				columnCounter=1;
+				rowCounter++;
+				addCell(rowCounter,columnCounter,newCell);
+			}
+		}
+		
+	}
 	public void shoot() {}
 	public void locate() {}
 	public void calculateScore() {}
 
-	
+	public String printBoard() {
+		String info="";
+		info+=firstCell;
+		info+=firstCell.getRight();
+		info+=firstCell.getRight().getRight();
+		info+=firstCell.getRight().getRight().getRight();
+		return info;
+	}
 	/**
 	 *Getters and Setters 
 	 */

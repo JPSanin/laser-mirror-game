@@ -59,7 +59,7 @@ public class Menu {
 	/** Method for interacting with main menu<br>
 	
 	<b> pre: </b> <br>
-	<b> post: </b> Prints options and read selection, allows program to function<br>	
+	<b> post: </b> Prints options and read selection, allows program to function recursively<br>	
 	@throws IOException
 	*/
 	private void mainMenu() throws IOException  {
@@ -94,6 +94,8 @@ public class Menu {
 	*/
 	private void play() {
 		System.out.println("Start Game");
+		gameController.generateBoard();
+		System.out.println(gameController.getGameBoard().printBoard());
 	}
 	
 	/** Method for showing the scores  <br>
