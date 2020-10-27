@@ -41,16 +41,31 @@ public class Board {
 
 	}
 
+
+	/** 
+	 * 
+	 *	Method for generating the game board <br>
+		<b> pre: </b> <br>
+		<b> post: </b> Creates a game board using recursive methods vertically and horizontally, also places mirrors<br>
+	 */
 	public void generateBoard() {
 		addCellsHorizontal(1,1,firstCell);
-		addCellsVertical(2,1,firstCell);
-
+		addCellsVertical(2,1,firstCell,firstCell);
+		//use placeMirrors;
+		placeMirrors();
 	}
 
+
+	/** Method for adding the first row of cells <br>
+		<b> pre: </b> <br>
+		<b> post: </b> Creates first row<br>
+	 * @param rowCounter, int representing the amount of rows that have been added
+	 * @param columnColumn, int representing the amount of columns that have been added
+	 * @param current, cell representing the current cell that will be added to
+	 */
 	private void addCellsHorizontal(int rowCounter, int columnCounter,Cell current) {
 		Cell newCell=null;
 		char x= (char)(columnCounter+64);
-		System.out.println("yes");
 		newCell=new Cell(false,3,rowCounter,x);
 
 
@@ -72,54 +87,77 @@ public class Board {
 		}
 	}
 
-	private void addCellsVertical(int rowCounter, int columnCounter,Cell current) {
+
+	/** Method for adding the columns and linking them in all four directions <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Completes the full grid of the game board <br>
+	 * @param rowCounter, int representing the amount of rows that have been added
+	 * @param columnColumn, int representing the amount of columns that have been added
+	 * @param current, cell representing the current cell that will be added to
+	 * @param colHead, cell representing the first cell of the column, it is used to 
+	 * switch columns once all cells have been added
+	 */
+	private void addCellsVertical(int rowCounter, int columnCounter,Cell current, Cell colHead) {
 		Cell newCell=null;
 		char x= (char)(columnCounter+64);
-		System.out.println("yes");
 		newCell=new Cell(false,3,rowCounter,x);
 
 
-		if(rowCounter==1) {
-			if(columnCounter==1) {
+		if(columnCounter==1) {
+			if(rowCounter<rows) {
 				current.setDown(newCell);
 				newCell.setUp(current);
 				rowCounter++;
-				addCellsVertical(rowCounter,columnCounter,newCell);
+				addCellsVertical(rowCounter,columnCounter,newCell,colHead);
+			}else if(rowCounter==rows) {
+				current.setDown(newCell);
+				newCell.setUp(current);
+				rowCounter=2;
+				columnCounter++;
+				addCellsVertical(rowCounter,columnCounter,colHead.getRight(),colHead.getRight());
 			}
-		}else if(rowCounter<rows) {
-			current.setDown(newCell);
-			newCell.setUp(current);
-			rowCounter++;
-			addCellsVertical(rowCounter,columnCounter,newCell);
-		}else if(rowCounter==rows) {
-			current.setDown(newCell);
-			newCell.setUp(current);
-			
+		}else if(columnCounter<columns)  {
+			if(rowCounter<rows) {
+				current.setDown(newCell);
+				newCell.setUp(current);
+				newCell.setLeft(current.getLeft().getDown());
+				current.getLeft().getDown().setRight(newCell);
+				rowCounter++;
+				addCellsVertical(rowCounter,columnCounter,newCell, colHead);
+			}else if(rowCounter==rows) {
+				current.setDown(newCell);
+				newCell.setUp(current);
+				newCell.setLeft(current.getLeft().getDown());
+				current.getLeft().getDown().setRight(newCell);
+				rowCounter=2;
+				columnCounter++;
+				addCellsVertical(rowCounter,columnCounter,colHead.getRight(),colHead.getRight());
+			}
+
+		}else if(columnCounter==columns) {
+			if(rowCounter<rows) {
+				current.setDown(newCell);
+				newCell.setUp(current);
+				newCell.setLeft(current.getLeft().getDown());
+				current.getLeft().getDown().setRight(newCell);
+				rowCounter++;
+				addCellsVertical(rowCounter,columnCounter,newCell, colHead);
+			}else if(rowCounter==rows) {
+				current.setDown(newCell);
+				newCell.setUp(current);
+				newCell.setLeft(current.getLeft().getDown());
+				current.getLeft().getDown().setRight(newCell);
+			}
 		}
+
 	}
 
-
-	/*
-	private Cell searchCell(int row, int col) {
-		Cell searched=null;
-
-		if(firstCell!=null) {
-			searched= searchCell(firstCell, row, col);
-		}
-
-	return searched;
+	
+	//Trabajar para que siempre llene el tablero
+	private void placeMirrors() {
+		//Traverse grid and set cell with mirrors using randoms
+		//	int addMirror=(int)(Math.random()*10+1);
 	}
-
-	private Cell searchCell(Cell current, int row, int col) {
-		Cell searched=null;
-		char x= (char)(col+64);
-		if(current.getRow()==row && current.getCol()==x) {
-			searched=current;
-		}else if ((current.getCol()-64)<columns) {
-			searched= searchCell(current.getRight(), row, col);
-		}
-		return searched;
-	}*/
 
 	public void shoot() {}
 	public void locate() {}
@@ -131,9 +169,16 @@ public class Board {
 		info+=firstCell.getRight();
 		info+=firstCell.getRight().getRight();
 		info+=firstCell.getRight().getRight().getRight()+"\n";
-		info+=firstCell.getDown()+"\n";
-		info+=firstCell.getDown().getDown()+"\n";
-		info+=firstCell.getDown().getDown().getDown();
+		info+=firstCell.getDown();
+		info+=firstCell.getDown().getRight();
+		info+=firstCell.getDown().getRight().getRight();
+		info+=firstCell.getDown().getRight().getRight().getRight()+"\n";
+		info+=firstCell.getDown().getDown();
+		//info+=firstCell.getDown().getDown().getRight();
+		//info+=firstCell.getDown().getDown().getRight().getRight();
+		//info+=firstCell.getDown().getDown().getRight().getRight().getRight()+"\n";
+
+
 		return info;
 	}
 	/**
