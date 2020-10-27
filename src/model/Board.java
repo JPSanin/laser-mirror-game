@@ -18,7 +18,7 @@ public class Board {
 	private int errors;
 	//private String viewBoard;
 	private Cell firstCell;
-	
+
 	/** 
 	 * 
 	 *	Constructor method for a Board <br>
@@ -32,83 +32,95 @@ public class Board {
 		this.rows = rows;
 		this.columns = columns;
 		this.mirrors = mirrors;
-	
+
 		mirrorsFound=0;
 		mirrorsAdded=0;
 		shots=0;
 		locates=0;
 		errors=0;
-		
+
 	}
-	
+
 	public void generateBoard() {
-		addCell(1,1,firstCell);
-	
+		addCellsHorizontal(1,1,firstCell);
+		addCellsVertical(2,1,firstCell);
+
 	}
-	
-	private void addCell(int rowCounter, int columnCounter,Cell current) {
+
+	private void addCellsHorizontal(int rowCounter, int columnCounter,Cell current) {
 		Cell newCell=null;
 		char x= (char)(columnCounter+64);
 		System.out.println("yes");
 		newCell=new Cell(false,3,rowCounter,x);
-		/*if(mirrorsAdded<mirrors) {
-			int addMirror=(int)(Math.random()*10+1);
-			if(addMirror==1) {
-				int mirDir=(int)(Math.random()*2+1);
-				newCell=new Cell(true,mirDir,rowCounter,x);
-				mirrorsAdded++;
-			}else {
-				newCell=new Cell(false,3,rowCounter,x);
-			}
-		}*/
-		
+
+
 		if(rowCounter==1) {
 			if(columnCounter==1) {
 				firstCell=newCell;
 				columnCounter++;
-				addCell(rowCounter, columnCounter, firstCell);
+				addCellsHorizontal(rowCounter, columnCounter, firstCell);
 			}else if(columnCounter<columns) {
 				newCell.setLeft(current);
 				current.setRight(newCell);
 				columnCounter++;
-				addCell(rowCounter,columnCounter,newCell);
+				addCellsHorizontal(rowCounter,columnCounter,newCell);
 			}else if(columnCounter==columns) {
 				newCell.setLeft(current);
-				current.setRight(newCell);
-				columnCounter=1;
-				rowCounter++;
-				addCell(rowCounter,columnCounter,newCell);
+				current.setRight(newCell);	
 			}
-			
-		}else if(rowCounter>1 && rowCounter<=rows) {
-			if(columnCounter==1) {
-				//Search for upper (row-1,col)
-				//newCell.setUp(searchResult);
-				//searchResult.setDown(newCell);
-				columnCounter++;
-				addCell(rowCounter,columnCounter,newCell);
-				
-			}else if(columnCounter<columns) {
-				//Search for upper (row-1,col)
-				//newCell.setUp(searchResult);
-				//searchResult.setDown(newCell);
-				newCell.setLeft(current);
-				current.setRight(newCell);
-				columnCounter++;
-				addCell(rowCounter,columnCounter,newCell);
-			}else if(columnCounter==columns) {
-				//Search for upper (row-1,col)
-				//newCell.setUp(searchResult);
-				//searchResult.setDown(newCell);
-				newCell.setLeft(current);
-				current.setRight(newCell);
-				columnCounter=1;
-				rowCounter++;
-				addCell(rowCounter,columnCounter,newCell);
-			}
+
 		}
-		
 	}
+
+	private void addCellsVertical(int rowCounter, int columnCounter,Cell current) {
+		Cell newCell=null;
+		char x= (char)(columnCounter+64);
+		System.out.println("yes");
+		newCell=new Cell(false,3,rowCounter,x);
+
+
+		if(rowCounter==1) {
+			if(columnCounter==1) {
+				current.setDown(newCell);
+				newCell.setUp(current);
+				rowCounter++;
+				addCellsVertical(rowCounter,columnCounter,newCell);
+			}
+		}else if(rowCounter<rows) {
+			current.setDown(newCell);
+			newCell.setUp(current);
+			rowCounter++;
+			addCellsVertical(rowCounter,columnCounter,newCell);
+		}else if(rowCounter==rows) {
+			current.setDown(newCell);
+			newCell.setUp(current);
+			
+		}
+	}
+
+
+	/*
+	private Cell searchCell(int row, int col) {
+		Cell searched=null;
+
+		if(firstCell!=null) {
+			searched= searchCell(firstCell, row, col);
+		}
+
+	return searched;
+	}
+
+	private Cell searchCell(Cell current, int row, int col) {
+		Cell searched=null;
+		char x= (char)(col+64);
+		if(current.getRow()==row && current.getCol()==x) {
+			searched=current;
+		}else if ((current.getCol()-64)<columns) {
+			searched= searchCell(current.getRight(), row, col);
+		}
+		return searched;
+	}*/
+
 	public void shoot() {}
 	public void locate() {}
 	public void calculateScore() {}
@@ -118,7 +130,10 @@ public class Board {
 		info+=firstCell;
 		info+=firstCell.getRight();
 		info+=firstCell.getRight().getRight();
-		info+=firstCell.getRight().getRight().getRight();
+		info+=firstCell.getRight().getRight().getRight()+"\n";
+		info+=firstCell.getDown()+"\n";
+		info+=firstCell.getDown().getDown()+"\n";
+		info+=firstCell.getDown().getDown().getDown();
 		return info;
 	}
 	/**
@@ -187,8 +202,8 @@ public class Board {
 	public void setFirstCell(Cell firstCell) {
 		this.firstCell = firstCell;
 	}
-	
-	
-	
+
+
+
 
 }

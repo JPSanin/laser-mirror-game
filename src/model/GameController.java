@@ -30,7 +30,7 @@ public class GameController {
 	public void locate() {}
 	public void addPlayer() {}
 	public void generateBoard() {
-		gameBoard=new Board(1, 4, 2);
+		gameBoard=new Board(3, 4, 2);
 		gameBoard.generateBoard();
 	}
 
