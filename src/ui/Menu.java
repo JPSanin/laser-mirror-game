@@ -39,7 +39,7 @@ public class Menu {
 	*/
 	private void welcome() {
 		System.out.println("**************************************");
-		System.out.println("***WELCOME TO THE LASER-MIRROR GAME***");
+		System.out.println("***WELCOME TO THE LAZER-MIRROR GAME***");
 		System.out.println("**************************************");
 	}
 	

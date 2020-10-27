@@ -51,8 +51,7 @@ public class Board {
 	public void generateBoard() {
 		addCellsHorizontal(1,1,firstCell);
 		addCellsVertical(2,1,firstCell,firstCell);
-		//use placeMirrors;
-		placeMirrors();
+		placeMirrors(firstCell,firstCell);
 	}
 
 
@@ -154,7 +153,28 @@ public class Board {
 
 	
 	//Trabajar para que siempre llene el tablero
-	private void placeMirrors() {
+	private void placeMirrors(Cell current, Cell rowHead) {
+		if(mirrorsAdded<mirrors) {
+			if(current.isMirror()==false) {
+			int mirrorRandom=(int)(Math.random()*10+1);
+			if(mirrorRandom==1) {
+				int mirDir=(int)(Math.random()*2+1);
+				current.setMirror(true);
+				current.setMirrorDir(mirDir);
+				mirrorsAdded++;
+			}
+			if((int)(current.getCol()-64)==columns && current.getRow()==rows) {
+				placeMirrors(firstCell,firstCell);
+			}else if((int)(current.getCol()-64)<columns) {
+				placeMirrors(current.getRight(),rowHead);
+			}else if((int)(current.getCol()-64)==columns) {
+				placeMirrors(rowHead.getDown(),rowHead.getDown());
+			}
+			
+			}
+		}
+		
+		
 		//Traverse grid and set cell with mirrors using randoms
 		//	int addMirror=(int)(Math.random()*10+1);
 	}
