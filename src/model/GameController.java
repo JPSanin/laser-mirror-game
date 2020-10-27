@@ -26,9 +26,36 @@ public class GameController {
 		scoreBoard=null;
 	} 
 	
-	public void shoot() {}
+	public void shoot(String shot) {
+		String shotinfo = stringSplitter(shot,0);
+		System.out.println(shotinfo);
+		String[] parts=shotinfo.split(",");
+		int row= Integer.parseInt(parts[0]);
+		
+		//gameBoard.shootStarter(10,'a', 2);
+	}
+	
+	
+	
+	private String stringSplitter(String str, int index) {
+		String info=null;
+		if(!Character.isDigit(str.charAt(index))){
+			System.out.println("YES");
+			info=str.substring(0, index) + "," + str.substring(index);
+			return info;
+		}else {
+			index++;
+			System.out.println(index);
+			info=stringSplitter(str,index);
+		}
+		return info;
+		
+	}
 	public void locate() {}
 	public void addPlayer() {}
+	
+	
+	
 	
 	public void generateBoard(int rows, int columns, int mirrors) {
 		gameBoard=new Board(rows, columns, mirrors);

@@ -95,9 +95,21 @@ public class Menu {
 	 * @throws IOException 
 	*/
 	private void play() throws IOException {
-		generateBoard();
+		//generateBoard();
+		action();
+		
 		
 	}
+	
+	private void action() throws IOException {
+		String info= br.readLine();
+		if(Character.isDigit(info.charAt(0))) {
+			gameController.shoot(info.toUpperCase());
+		}
+		
+	}
+	
+	
 	/** Method for reading information to begin playing the game<br>
 	
 	<b> pre: </b> <br>
@@ -119,6 +131,8 @@ public class Menu {
 		System.out.println(gameController.getGameBoard().showBoardScreen(playerName));
 		
 	}
+	
+	
 	/** Method for showing the scores  <br>
 	
 	<b> pre: </b> <br>

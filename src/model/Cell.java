@@ -13,15 +13,18 @@ package model;
 public class Cell {
 	private char col;
 	private int row;
-	
+
 	private boolean mirror;
 	private int mirrorDir;
 	private boolean found;
+	private int error;
+	private boolean start;
+	private boolean end;
 	private Cell left;
 	private Cell right;
 	private Cell up;
 	private Cell down;
-	
+
 	/** 
 	 * 
 	 *	Constructor method for a Cell <br>
@@ -37,21 +40,34 @@ public class Cell {
 		this.mirrorDir = mirrorDir;
 		this.col=col;
 		this.row=row;
-		
+		found=false;
+		start=false;
+		end=false;
+		error=0;
+
 	}
-	
+
 	@Override
 	public String toString() {
 		String info="";
-		if(mirror==true) {
+		if(start==true && end==true) {
+			info="[M]";
+		}else if(start==true) {
+			info="[S]";
+		}else if(end==true){
+			info="[E]";
+		}else if(mirror==true && found==true) {
 			if(mirrorDir==1) {
 				info="[/]";
 			}
 			if(mirrorDir==2) {
 				info="[\\]";
 			}
-			
-		}else {
+		}else if(error==1){
+			info="[X]";
+		}else if (error==2) {
+			info="[*]";
+		}else{
 			info="[ ]";
 		}
 		//info="["+row+col+"]";
@@ -63,12 +79,36 @@ public class Cell {
 	/**
 	 *Getters and Setters 
 	 */
-	 
+	
 
 	public char getCol() {
 		return col;
 	}
 
+
+	public int getError() {
+		return error;
+	}
+
+	public void setError(int error) {
+		this.error = error;
+	}
+
+	public boolean isStart() {
+		return start;
+	}
+
+	public void setStart(boolean start) {
+		this.start = start;
+	}
+
+	public boolean isEnd() {
+		return end;
+	}
+
+	public void setEnd(boolean end) {
+		this.end = end;
+	}
 
 	public void setCol(char col) {
 		this.col = col;
@@ -84,7 +124,7 @@ public class Cell {
 		this.row = row;
 	}
 
-	
+
 	public boolean isMirror() {
 		return mirror;
 	}
@@ -94,7 +134,7 @@ public class Cell {
 		this.mirror = mirror;
 	}
 
-	
+
 	public int getMirrorDir() {
 		return mirrorDir;
 	}
@@ -156,9 +196,9 @@ public class Cell {
 
 
 
-	
-	
-	
-	
+
+
+
+
 
 }

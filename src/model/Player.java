@@ -45,6 +45,8 @@ public class Player {
 		return info;
 	}
 
+	public void calculateScore(int shots, int locates, int errors, int mirrorsFound) {}
+	
 	
 	/**
 	 *Getters and Setters 

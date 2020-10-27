@@ -181,10 +181,22 @@ public class Board {
 		}
 	}
 
-	public void shoot() {}
+	public void shootStarter(int row, char c, int dir) {
+		
+		
+		shooter();
+	}
+	
+	private void shooter() {}
 	public void locate() {}
 	public void calculateScore() {}
 	
+	
+	/** Method for showing the game current screen <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Shows the current state of the game <br>
+	 * @param nickname, String with the current players nickname 
+	 */
 	public String showBoardScreen(String nickname) {
 		String info="";
 		int remainingMirrors= mirrors-mirrorsFound;
@@ -195,6 +207,14 @@ public class Board {
 		
 	}
 
+	
+	/** Method for saving the representation of the game board into a string <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Adds the string of each cell to a the game board <br>
+	 * @param current, cell representing the current cell 
+	 * @param rowHead, cell representing the first cell of the row, it is used to 
+	 * switch rows once all horizontal cells have been traversed
+	 */
 	private void printBoard(Cell current, Cell rowHead) {
 		
 		if((int)(current.getCol()-64)==columns && current.getRow()==rows) {
@@ -208,6 +228,7 @@ public class Board {
 			
 		}
 	}
+	
 	/**
 	 *Getters and Setters 
 	 */
