@@ -183,18 +183,84 @@ public class Board {
 
 	public void shootStarter(int row, char col, int dir) {
 		Cell start=null;
+		Cell end=null;
 		start=searchBorder(row,col,firstCell);
 		start.setStart(true);
-		shooter();
+		end=shooter(start,dir);
+		end.setEnd(true);
 		viewBoard="";
 		printBoard(firstCell,firstCell);
 		start.setStart(false);
-	
+		end.setEnd(false);
 		
 	}
 	
-	private void shooter() {
-		System.out.println("recursive shot");
+	private Cell shooter(Cell current, int dir) {
+		Cell end=null;
+		switch(dir) {
+		case 1:
+			if(current.getUp()==null) {
+				end=current;
+			}else {
+				if(current.getUp().isMirror()==true) {
+					if(current.getUp().getMirrorDir()==1) {
+						end=shooter(current.getUp(),3);
+					}else if(current.getUp().getMirrorDir()==2) {
+						end=shooter(current.getUp(),4);
+					}
+				}else {
+					end=shooter(current.getUp(),1);
+				}
+			}
+			break;
+		case 2:
+			if(current.getDown()==null) {
+				end=current;
+			}else {
+				if(current.getDown().isMirror()==true) {
+					if(current.getDown().getMirrorDir()==1) {
+						end=shooter(current.getDown(),4);
+					}else if(current.getDown().getMirrorDir()==2) {
+						end=shooter(current.getDown(),3);
+					}
+				}else {
+					end=shooter(current.getDown(),2);
+				}
+			}
+			break;
+		case 3:
+			if(current.getRight()==null) {
+				end=current;
+			}else {
+				if(current.getRight().isMirror()==true) {
+					if(current.getRight().getMirrorDir()==1) {
+						end=shooter(current.getRight(),1);
+					}else if(current.getRight().getMirrorDir()==2) {
+						end=shooter(current.getRight(),2);
+					}
+				}else {
+					end=shooter(current.getRight(),3);
+				}
+			}
+			break;
+		case 4:
+			if(current.getLeft()==null) {
+				end=current;
+			}else {
+				if(current.getLeft().isMirror()==true) {
+					if(current.getLeft().getMirrorDir()==1) {
+						end=shooter(current.getLeft(),2);
+					}else if(current.getLeft().getMirrorDir()==2) {
+						end=shooter(current.getLeft(),1);
+					}
+				}else {
+					end=shooter(current.getLeft(),4);
+				}
+			}
+			break;
+			
+		}
+		return end;
 	}
 	
 	private Cell searchBorder(int row, char col, Cell current) {

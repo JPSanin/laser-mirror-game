@@ -56,7 +56,7 @@ public class Cell {
 			info="[S]";
 		}else if(end==true){
 			info="[E]";
-		}else if(mirror==true && found==true) {
+		}else if(mirror==true /*&& found==true*/) {
 			if(mirrorDir==1) {
 				info="[/]";
 			}
