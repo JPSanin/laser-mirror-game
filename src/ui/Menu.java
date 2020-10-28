@@ -121,6 +121,7 @@ public class Menu {
 			if(gameController.getGameBoard().checkWin()) {
 				System.out.println("************WINNER************");
 				System.out.println("YOU HAVE FOUND ALL THE MIRRORS");
+				gameController.getGameBoard().calculateScore();
 				System.out.println(gameController.getGameBoard().printSummary(playerName));
 			}else {
 				action();
@@ -130,6 +131,7 @@ public class Menu {
 			System.out.println(gameController.getGameBoard().showBoardHacked(playerName));
 			action();
 		}else if(info.equals("MENU")){
+			gameController.getGameBoard().calculateScore();
 			System.out.println(gameController.getGameBoard().printSummary(playerName));
 		}
 		

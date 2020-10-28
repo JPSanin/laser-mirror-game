@@ -16,6 +16,7 @@ public class Board {
 	private int shots;
 	private int locates;
 	private int errors;
+	private int score;
 	private String viewBoard;
 	private Cell firstCell;
 
@@ -38,6 +39,7 @@ public class Board {
 		shots=0;
 		locates=0;
 		errors=0;
+		score=0;
 
 	}
 
@@ -417,13 +419,20 @@ public class Board {
 		summary+= "Total Shots: "+shots+"\n";		
 		summary+= "Total location attempts: "+locates+"\n";	
 		summary+= "Total Errors: "+errors+"\n";	
-		summary+= "Final Score: missing \n";	
+		summary+= "Final Score: "+score+ "\n";	
 		summary+= "GG "+nickname+" see you next match!\n";	
 		return summary;
 	}
 	
 	
-	public void calculateScore() {}
+	public void calculateScore() {
+		score=0;
+		score+= rows+columns;
+		score-=shots;
+		score-=(errors*3);
+		score+= (mirrorsFound*5);
+		score-=mirrors;
+	}
 	
 	
 	/** Method for checking if the player has won <br>
