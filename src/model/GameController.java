@@ -165,7 +165,15 @@ public class GameController {
 	
 	
 	
+	/** Method for sending game board values<br>
 	
+	<b> pre: </b> <br>
+	<b> post: </b> Sends game board values and generates the game board<br>
+	 *@param rows, the amount of rows in the board 
+	 *@param columns, the amount of columns in the board 
+	 *@param mirrors, the amount of mirrors in the board 
+	 *
+	*/
 	public void generateBoard(int rows, int columns, int mirrors) {
 		gameBoard=new Board(rows, columns, mirrors);
 		gameBoard.generateBoard();

@@ -181,6 +181,14 @@ public class Board {
 		}
 	}
 
+	
+	/** Method starting the shot process <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Shoots and prints the start and end of the shot<br>
+	 * @param row, the row of the starting cell
+	 * @param column, the column of the starting cell
+	 * @param dir, the direction the laser is shot
+	 */
 	public void shootStarter(int row, char col, int dir) {
 		Cell start=null;
 		Cell end=null;
@@ -199,63 +207,88 @@ public class Board {
 		Cell end=null;
 		switch(dir) {
 		case 1:
-			if(current.getUp()==null) {
+			if(current.isMirror()==true) {
+				if(current.getMirrorDir()==1) {
+					if(current.getRight()==null) {
+						end=current;
+					}else {
+						end=shooter(current.getRight(),3);
+					}
+				}else if(current.getMirrorDir()==2) {
+					if(current.getLeft()==null) {
+						end=current;
+					}else {
+						end=shooter(current.getLeft(),4);
+					}
+				}
+			}else if(current.getUp()==null){
 				end=current;
 			}else {
-				if(current.getUp().isMirror()==true) {
-					if(current.getUp().getMirrorDir()==1) {
-						end=shooter(current.getUp(),3);
-					}else if(current.getUp().getMirrorDir()==2) {
-						end=shooter(current.getUp(),4);
-					}
-				}else {
-					end=shooter(current.getUp(),1);
-				}
+				end=shooter(current.getUp(),1);
 			}
 			break;
 		case 2:
-			if(current.getDown()==null) {
+			if(current.isMirror()==true) {
+				if(current.getMirrorDir()==1) {
+					if(current.getLeft()==null) {
+						end=current;
+					}else {
+						end=shooter(current.getLeft(),4);
+					}
+				}else if(current.getMirrorDir()==2) {
+					if(current.getRight()==null) {
+						end=current;
+					}else {
+						end=shooter(current.getRight(),3);
+					}
+				}
+			}else if(current.getDown()==null){
 				end=current;
 			}else {
-				if(current.getDown().isMirror()==true) {
-					if(current.getDown().getMirrorDir()==1) {
-						end=shooter(current.getDown(),4);
-					}else if(current.getDown().getMirrorDir()==2) {
-						end=shooter(current.getDown(),3);
-					}
-				}else {
-					end=shooter(current.getDown(),2);
-				}
+				end=shooter(current.getDown(),2);
 			}
 			break;
 		case 3:
-			if(current.getRight()==null) {
+			if(current.isMirror()==true) {
+				if(current.getMirrorDir()==1) {
+					if(current.getUp()==null) {
+						end=current;
+					}else {
+						end=shooter(current.getUp(),1);
+					}
+				}else if(current.getMirrorDir()==2) {
+					if(current.getDown()==null) {
+						end=current;
+					}else {
+						end=shooter(current.getDown(),2);
+					}
+				}
+			}else if(current.getRight()==null){
 				end=current;
 			}else {
-				if(current.getRight().isMirror()==true) {
-					if(current.getRight().getMirrorDir()==1) {
-						end=shooter(current.getRight(),1);
-					}else if(current.getRight().getMirrorDir()==2) {
-						end=shooter(current.getRight(),2);
-					}
-				}else {
-					end=shooter(current.getRight(),3);
-				}
+				end=shooter(current.getRight(),3);
 			}
 			break;
 		case 4:
-			if(current.getLeft()==null) {
+			if(current.isMirror()==true) {
+				if(current.getMirrorDir()==1) {
+					if(current.getDown()==null) {
+						end=current;
+					}else {
+						end=shooter(current.getDown(),2);
+					
+					}
+				}else if(current.getMirrorDir()==2) {
+					if(current.getUp()==null) {
+						end=current;
+					}else {
+						end=shooter(current.getUp(),1);
+					}
+				}
+			}else if(current.getLeft()==null){
 				end=current;
 			}else {
-				if(current.getLeft().isMirror()==true) {
-					if(current.getLeft().getMirrorDir()==1) {
-						end=shooter(current.getLeft(),2);
-					}else if(current.getLeft().getMirrorDir()==2) {
-						end=shooter(current.getLeft(),1);
-					}
-				}else {
-					end=shooter(current.getLeft(),4);
-				}
+				end=shooter(current.getLeft(),4);
 			}
 			break;
 			
