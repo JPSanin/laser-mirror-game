@@ -28,24 +28,90 @@ public class GameController {
 	
 	public void shoot(String shot) {
 		String shotinfo = stringSplitter(shot,0);
-		System.out.println(shotinfo);
 		String[] parts=shotinfo.split(",");
 		int row= Integer.parseInt(parts[0]);
+		char col= parts[1].charAt(0);
+		int dir=checkCorner(row,col, parts);
+		if(dir==0) {
+			dir=findDir(row,col);
+		}
+		if(dir==0) {
+			System.out.println("Cannot shoot");
+		}
 		
-		//gameBoard.shootStarter(10,'a', 2);
+		System.out.println("Row: "+row+", Col: "+col+", Dir : "+dir);
 	}
 	
+	
+	private int findDir(int row, char col) {
+		int dir=0;
+		if(row==1) {
+			dir=2;
+		}else if(row==gameBoard.getRows()) {
+			dir=1;
+		}else if(col==65) {
+			dir=3;
+		}else if(col== (gameBoard.getColumns()+64)) {
+			dir=4;
+		}
+		return dir;
+	}
+
+	private int checkCorner(int row, char col, String[] parts) {
+		int dir=0;
+		if(row==1 && col==65) {
+			if(parts[1].length()==2) {
+				if(parts[1].charAt(1)=='H') {
+					dir=3;
+				}else if(parts[1].charAt(1)=='V') {
+					dir=2;
+				}
+			}else if (parts[1].length()==1) {
+				System.out.println("CORNER EXCEPTION");
+			}
+			
+		}else if(row==1 && col== (gameBoard.getColumns()+64)) {
+			if(parts[1].length()==2) {
+				if(parts[1].charAt(1)=='H') {
+					dir=4;
+				}else if(parts[1].charAt(1)=='V') {
+					dir=2;
+				}
+			}else if (parts[1].length()==1) {
+				System.out.println("CORNER EXCEPTION");
+			}
+		}else if(row==gameBoard.getRows() && col==65) {
+			if(parts[1].length()==2) {
+				if(parts[1].charAt(1)=='H') {
+					dir=3;
+				}else if(parts[1].charAt(1)=='V') {
+					dir=1;
+				}
+			}else if (parts[1].length()==1) {
+				System.out.println("CORNER EXCEPTION");
+			}
+		}else if(row==gameBoard.getRows() && col==(gameBoard.getColumns()+64)) {
+			if(parts[1].length()==2) {
+				if(parts[1].charAt(1)=='H') {
+					dir=4;
+				}else if(parts[1].charAt(1)=='V') {
+					dir=1;
+				}
+			}else if (parts[1].length()==1) {
+				System.out.println("CORNER EXCEPTION");
+			}
+		}
+		return dir;
+	}
 	
 	
 	private String stringSplitter(String str, int index) {
 		String info=null;
 		if(!Character.isDigit(str.charAt(index))){
-			System.out.println("YES");
 			info=str.substring(0, index) + "," + str.substring(index);
 			return info;
 		}else {
 			index++;
-			System.out.println(index);
 			info=stringSplitter(str,index);
 		}
 		return info;

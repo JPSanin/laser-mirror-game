@@ -95,16 +95,19 @@ public class Menu {
 	 * @throws IOException 
 	*/
 	private void play() throws IOException {
-		//generateBoard();
+		generateBoard();
 		action();
 		
 		
 	}
 	
 	private void action() throws IOException {
-		String info= br.readLine();
+		String info= br.readLine().toUpperCase();
 		if(Character.isDigit(info.charAt(0))) {
-			gameController.shoot(info.toUpperCase());
+			gameController.shoot(info);
+			action();
+		}else if(info.equals("MENU")){
+			
 		}
 		
 	}
