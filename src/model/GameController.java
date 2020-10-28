@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.*;
+
 /**
  * Class that represents the Game Controller
  * this class will send the instructions to the board
@@ -26,23 +28,42 @@ public class GameController {
 		scoreBoard=null;
 	} 
 	
-	public void shoot(String shot) {
+	
+	/** Method for sending shot information to the game board<br>
+	
+	<b> pre: </b> <br>
+	<b> post: </b> Sends shot information to game board<br>	
+	 * @throws CannotShootException, when the cell is not a border
+	 * @throws CornerException, when he shot is a corner and the direction is not specified or wrong 
+	 * Direction is represented by an int 1=up, 2=down, 3= right, 4= left, 5= corner with wrong direction;
+	*/
+	public void shoot(String shot) throws CannotShootException, CornerException {
 		String shotinfo = stringSplitter(shot,0);
 		String[] parts=shotinfo.split(",");
 		int row= Integer.parseInt(parts[0]);
 		char col= parts[1].charAt(0);
 		int dir=checkCorner(row,col, parts);
-		if(dir==0) {
+		if(dir==5 && parts[1].length()==1) {
 			dir=findDir(row,col);
 		}
-		if(dir==0) {
-			System.out.println("Cannot shoot");
+		if(dir==5 && parts[1].length()>1) {
+			throw new CornerException(row,col);
 		}
-		
-		System.out.println("Row: "+row+", Col: "+col+", Dir : "+dir);
+		if(dir==0) {
+			throw new CannotShootException(row,col);
+		}
+		gameBoard.shootStarter(row, col, dir);
 	}
 	
+	/** Method for finding the direction of cells that are not corners<br>
 	
+	<b> pre: </b> <br>
+	<b> post: </b> Returns the initial direction of the shot<br>
+	 *@param row, int representing the row of the shot
+	 *@param col, int representing the column of the shot
+	 *@return dir, an int representing the initial direction of the shot
+	 *
+	*/
 	private int findDir(int row, char col) {
 		int dir=0;
 		if(row==1) {
@@ -57,8 +78,19 @@ public class GameController {
 		return dir;
 	}
 
-	private int checkCorner(int row, char col, String[] parts) {
-		int dir=0;
+	
+	/** Method for checking if a cell is a corner and sending direction<br>
+	
+	<b> pre: </b> <br>
+	<b> post: </b> Returns the initial direction of the shot if it is a corner<br>
+	 *@param row, int representing the row of the shot
+	 *@param col, int representing the column of the shot
+	 *@param parts, a string array containing the direction of the shot given by the user
+	 *@return dir, an int representing the initial direction of the shot
+	 *
+	*/
+	private int checkCorner(int row, char col, String[] parts) throws CornerException {
+		int dir=5;
 		if(row==1 && col==65) {
 			if(parts[1].length()==2) {
 				if(parts[1].charAt(1)=='H') {
@@ -67,7 +99,7 @@ public class GameController {
 					dir=2;
 				}
 			}else if (parts[1].length()==1) {
-				System.out.println("CORNER EXCEPTION");
+				throw new CornerException(row,col);
 			}
 			
 		}else if(row==1 && col== (gameBoard.getColumns()+64)) {
@@ -78,7 +110,7 @@ public class GameController {
 					dir=2;
 				}
 			}else if (parts[1].length()==1) {
-				System.out.println("CORNER EXCEPTION");
+				throw new CornerException(row,col);
 			}
 		}else if(row==gameBoard.getRows() && col==65) {
 			if(parts[1].length()==2) {
@@ -88,7 +120,7 @@ public class GameController {
 					dir=1;
 				}
 			}else if (parts[1].length()==1) {
-				System.out.println("CORNER EXCEPTION");
+				throw new CornerException(row,col);
 			}
 		}else if(row==gameBoard.getRows() && col==(gameBoard.getColumns()+64)) {
 			if(parts[1].length()==2) {
@@ -98,13 +130,24 @@ public class GameController {
 					dir=1;
 				}
 			}else if (parts[1].length()==1) {
-				System.out.println("CORNER EXCEPTION");
+				throw new CornerException(row,col);
 			}
 		}
 		return dir;
 	}
 	
 	
+	
+
+	/** Method for splitting Strings<br>
+	
+	<b> pre: </b> <br>
+	<b> post: </b> Returns the split string with row and column separated<br>
+	 *@param str, String that wants to be split
+	 *@param index, where it is going to be split 
+	 *@return info, a string with the information separated by a comma so it can be split
+	 *
+	*/
 	private String stringSplitter(String str, int index) {
 		String info=null;
 		if(!Character.isDigit(str.charAt(index))){

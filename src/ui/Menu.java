@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import exceptions.CannotShootException;
+import exceptions.CornerException;
 import model.GameController;
 
 /**
@@ -104,7 +106,13 @@ public class Menu {
 	private void action() throws IOException {
 		String info= br.readLine().toUpperCase();
 		if(Character.isDigit(info.charAt(0))) {
-			gameController.shoot(info);
+			try {
+				gameController.shoot(info);
+				System.out.println(gameController.getGameBoard().showBoardScreen(playerName));
+			} catch (CannotShootException | CornerException e) {
+				//e.printStackTrace();
+				System.err.println(e);
+			}
 			action();
 		}else if(info.equals("MENU")){
 			

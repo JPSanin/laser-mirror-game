@@ -70,6 +70,17 @@ public class Cell {
 		}else{
 			info="[ ]";
 		}
+		
+		/*if(mirror==true ) {
+			if(mirrorDir==1) {
+				info="[/]";
+			}
+			if(mirrorDir==2) {
+				info="[\\]";
+			}
+		}else {
+			info="[ ]";
+		}*/
 		//info="["+row+col+"]";
 		return info;
 	}

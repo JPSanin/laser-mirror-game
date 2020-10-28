@@ -52,7 +52,7 @@ public class Board {
 		addCellsHorizontal(1,1,firstCell);
 		addCellsVertical(2,1,firstCell,firstCell);
 		placeMirrors(firstCell,firstCell);
-		
+		printBoard(firstCell,firstCell);
 	}
 
 
@@ -181,13 +181,44 @@ public class Board {
 		}
 	}
 
-	public void shootStarter(int row, char c, int dir) {
-		
-		
+	public void shootStarter(int row, char col, int dir) {
+		Cell start=null;
+		start=searchBorder(row,col,firstCell);
+		start.setStart(true);
 		shooter();
+		viewBoard="";
+		printBoard(firstCell,firstCell);
+		start.setStart(false);
+	
+		
 	}
 	
-	private void shooter() {}
+	private void shooter() {
+		System.out.println("recursive shot");
+	}
+	
+	private Cell searchBorder(int row, char col, Cell current) {
+		Cell searched=null;
+		if(row==current.getRow()&&col==current.getCol()) {
+			searched=current;
+		}else {
+			if(current.getRight()!=null && current.getUp()==null) {
+				searched=searchBorder(row,col,current.getRight());
+			}else if(current.getRight()==null && current.getDown()!=null) {
+				searched=searchBorder(row,col,current.getDown());
+			}else if(current.getRight()==null && current.getDown()==null) {
+				searched=searchBorder(row,col,current.getLeft());
+			}else if(current.getLeft()!=null && current.getDown()==null) {
+				searched=searchBorder(row,col,current.getLeft());
+			}else if(current.getLeft()==null && current.getDown()==null) {
+				searched=searchBorder(row,col,current.getUp());
+			}else if(current.getUp()!=null && current.getLeft()==null ) {
+				searched=searchBorder(row,col,current.getUp());
+			}
+		}
+		return searched;
+	}
+	
 	public void locate() {}
 	public void calculateScore() {}
 	
@@ -201,7 +232,6 @@ public class Board {
 		String info="";
 		int remainingMirrors= mirrors-mirrorsFound;
 		info+= nickname+": "+remainingMirrors+ " mirrors remaining\n";
-		printBoard(firstCell,firstCell);
 		info+=viewBoard;
 		return info;
 		
@@ -216,7 +246,6 @@ public class Board {
 	 * switch rows once all horizontal cells have been traversed
 	 */
 	private void printBoard(Cell current, Cell rowHead) {
-		
 		if((int)(current.getCol()-64)==columns && current.getRow()==rows) {
 			viewBoard+=current+"\n";
 		}else if((int)(current.getCol()-64)<columns) {
