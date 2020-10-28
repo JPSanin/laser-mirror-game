@@ -182,7 +182,7 @@ public class Board {
 	}
 
 	
-	/** Method starting the shot process <br>
+	/** Method for starting the shot process <br>
 	<b> pre: </b> <br>
 	<b> post: </b> Shoots and prints the start and end of the shot<br>
 	 * @param row, the row of the starting cell
@@ -337,24 +337,42 @@ public class Board {
 		return searched;
 	}
 	
+	
+	/** Method for locating a cell <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Finds the cell and prints the result of what it is<br>
+	 * @param row, the row of the  cell
+	 * @param col, the column of the cell
+	 * @param mirDir, the direction of the mirror
+	 */
 	public void locate(int row, char col, int mirDir) {
 		Cell colHead=findColumnHead(col,firstCell);
 		Cell located=findCell(row,colHead);
 		if(located.isMirror()==true) {
 			if(mirDir==located.getMirrorDir()) {
 				located.setFound(true);
+				mirrorsFound++;
 			}else {
 				located.setError(2);
+				errors++;
 			}
 		}else {
 			located.setError(1);
+			errors++;
 		}
 		viewBoard="";
 		printBoard(firstCell,firstCell);
+		locates++;
 		
 	}
 	
-	
+	/** Method for finding the column head <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Finds the column head and returns it<br>
+	 * @param col, the column of the  cell
+	 * @param current, current cell it is searching 
+	 * @return head, the first cell of the column
+	 */
 	private Cell findColumnHead(char col, Cell current) {
 		Cell head=null;
 		if(col==current.getCol()) {
@@ -365,6 +383,14 @@ public class Board {
 		return head;
 	}
 	
+	
+	/** Method for finding the cell in column <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Finds the cell and returns it<br>
+	 * @param row, the row of the  cell
+	 * @param current, current cell it is searching 
+	 * @return cell, the searched cell in the column
+	 */
 	private Cell findCell(int row, Cell current) {
 		Cell cell=null;
 		if(row==current.getRow()) {
@@ -378,11 +404,19 @@ public class Board {
 	
 	public void calculateScore() {}
 	
+	public boolean checkWin() {
+		boolean win= false;
+		if(mirrorsFound==mirrors) {
+			win=true;
+		}
+		return win;
+	}
 	
 	/** Method for showing the game current screen <br>
 	<b> pre: </b> <br>
 	<b> post: </b> Shows the current state of the game <br>
-	 * @param nickname, String with the current players nickname 
+	 * @param nickname, String with the current players nickname
+	 * @return info, String with all the information 
 	 */
 	public String showBoardScreen(String nickname) {
 		String info="";
@@ -393,6 +427,12 @@ public class Board {
 		
 	}
 	
+	/** Method for showing the hacked game screen <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Shows the solved board <br>
+	 * @param nickname, String with the current players nickname
+	 * @return info, String with all the information 
+	 */
 	public String showBoardHacked(String nickname) {
 		String info="";
 		info+= nickname+ " HAS HACKED THE BOARD !!!\n";
@@ -424,6 +464,13 @@ public class Board {
 		}
 	}
 	
+	/** Method for saving the representation of the hacked game board into a string <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Adds the hacked string of each cell to a the game board <br>
+	 * @param current, cell representing the current cell 
+	 * @param rowHead, cell representing the first cell of the row, it is used to 
+	 * switch rows once all horizontal cells have been traversed
+	 */
 	private void printBoardHacks(Cell current, Cell rowHead) {
 		if((int)(current.getCol()-64)==columns && current.getRow()==rows) {
 			viewBoard+=current.hacks()+"\n";

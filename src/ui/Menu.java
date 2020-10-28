@@ -118,12 +118,18 @@ public class Menu {
 		if(info.charAt(0)=='L'){
 			gameController.locate(info);
 			System.out.println(gameController.getGameBoard().showBoardScreen(playerName));
-			action();
+			if(gameController.getGameBoard().checkWin()) {
+				System.out.println("WINNER");
+				System.out.println("Print game Summary");
+			}else {
+				action();
+			}
+			
 		}else if(info.equals("HACKS")){
 			System.out.println(gameController.getGameBoard().showBoardHacked(playerName));
 			action();
 		}else if(info.equals("MENU")){
-			
+			System.out.println("Print game Summary");
 		}
 		
 	}

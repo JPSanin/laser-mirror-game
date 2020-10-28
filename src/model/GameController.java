@@ -161,6 +161,12 @@ public class GameController {
 		
 	}
 	
+	/** Method for sending location information to the game board<br>
+	
+	<b> pre: </b> <br>
+	<b> post: </b> Sends location information to game board<br>	
+	 * @param location, String containing the location typed by the user
+	*/
 	public void locate(String location) {
 		String trimmedLoc=location.substring(1);
 		String info = stringSplitter(trimmedLoc,0);
@@ -176,6 +182,7 @@ public class GameController {
 		gameBoard.locate(row,col,mirDir);
 
 	}
+	
 	
 	
 	public void addPlayer() {}
