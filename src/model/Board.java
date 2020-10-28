@@ -427,11 +427,16 @@ public class Board {
 	
 	public void calculateScore() {
 		score=0;
+		if(shots>0) {
 		score+= rows+columns;
+		score-=mirrors;
+		}
+		
 		score-=shots;
 		score-=(errors*3);
-		score+= (mirrorsFound*5);
-		score-=mirrors;
+		score+= (mirrorsFound*10);
+		score-=locates;
+		
 	}
 	
 	
@@ -595,6 +600,16 @@ public class Board {
 
 	public void setViewBoard(String viewBoard) {
 		this.viewBoard = viewBoard;
+	}
+
+
+	public int getScore() {
+		return score;
+	}
+
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 

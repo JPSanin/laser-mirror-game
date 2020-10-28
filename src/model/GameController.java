@@ -25,7 +25,7 @@ public class GameController {
 	 */
 	public GameController() {
 		gameBoard=null;
-		scoreBoard=null;
+		scoreBoard=new ScoreList();
 	} 
 	
 	
@@ -185,7 +185,10 @@ public class GameController {
 	
 	
 	
-	public void addPlayer() {}
+	public void addPlayer(String nickname) {
+		int score= gameBoard.getScore();
+		scoreBoard.addPlayer(nickname,score);
+	}
 	
 	
 	
@@ -222,6 +225,9 @@ public class GameController {
 	public void setScoreBoard(ScoreList scoreBoard) {
 		this.scoreBoard = scoreBoard;
 	}
+
+
+
 
 
 	

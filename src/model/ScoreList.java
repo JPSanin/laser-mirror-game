@@ -13,7 +13,8 @@ package model;
  */
 public class ScoreList {
 	private Player root;
-	
+	private String leaderboard;
+	private int rank;
 	
 	/** 
 	 * 
@@ -24,15 +25,53 @@ public class ScoreList {
 	 */
 	public ScoreList() {
 		root=null;
+		rank=1;
 	}
 	
-	public void addPlayer() {}
+	public void addPlayer(String nickname, int score) {
+		Player newPlayer= new Player(nickname, score);
+		if(root==null) {
+			root=newPlayer;
+		}else {
+			addEmployee(root,newPlayer);
+		}
+		System.out.println("Success");
+	}
 	
-	public String printScores() {
-		String info="";
-		return info;
+	private void addEmployee(Player current, Player newPlayer) {
+		if(current.getScore()>newPlayer.getScore()) {
+			if(current.getLeft()==null) {
+				current.setLeft(newPlayer);
+				newPlayer.setFather(current);
+			}else {
+				addEmployee(current.getLeft(),newPlayer);
+			}
+		}else {
+			if(current.getRight()==null) {
+				current.setRight(newPlayer);
+				newPlayer.setFather(current);
+			}else {
+				addEmployee(current.getRight(),newPlayer);
+			}
+		}
+	}
+	
+
+	public String printScores() {	
+		leaderboard="";
+		rank=1;
+		createLeaderBoard(root);
+		return leaderboard;
 	}
 
+	private void createLeaderBoard(Player current) {
+		if(current!=null) {
+			createLeaderBoard(current.getRight());
+			leaderboard+=rank+") "+current+"\n";
+			rank++;
+			createLeaderBoard(current.getLeft());
+		}
+	}
 	
 	/**
 	 *Getters and Setters 

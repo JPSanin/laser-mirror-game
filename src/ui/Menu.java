@@ -123,6 +123,7 @@ public class Menu {
 				System.out.println("YOU HAVE FOUND ALL THE MIRRORS");
 				gameController.getGameBoard().calculateScore();
 				System.out.println(gameController.getGameBoard().printSummary(playerName));
+				gameController.addPlayer(playerName);
 			}else {
 				action();
 			}
@@ -133,6 +134,7 @@ public class Menu {
 		}else if(info.equals("MENU")){
 			gameController.getGameBoard().calculateScore();
 			System.out.println(gameController.getGameBoard().printSummary(playerName));
+			gameController.addPlayer(playerName);
 		}
 		
 	}
@@ -162,12 +164,13 @@ public class Menu {
 	
 	
 	/** Method for showing the scores  <br>
-	
 	<b> pre: </b> <br>
 	<b> post: </b> Shows the scores of the players that have played<br>	
 	*/
 	private void viewScores() {
-		System.out.println("Show Scores");
+		System.out.println("************LEADERBOARDS************");
+		System.out.println("RANK) Nickname: Score");
+		System.out.println(gameController.getScoreBoard().printScores());
 	}
 	
 	/** Method for initiating program<br>
