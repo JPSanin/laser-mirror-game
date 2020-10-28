@@ -176,6 +176,8 @@ public class GameController {
 		gameBoard.locate(row,col,mirDir);
 
 	}
+	
+	
 	public void addPlayer() {}
 	
 	
@@ -195,7 +197,6 @@ public class GameController {
 		
 	}
 
-	
 	/**
 	 *Getters and Setters 
 	 */
@@ -214,6 +215,9 @@ public class GameController {
 	public void setScoreBoard(ScoreList scoreBoard) {
 		this.scoreBoard = scoreBoard;
 	}
+
+
+	
 	
 	
 	

@@ -47,6 +47,22 @@ public class Cell {
 
 	}
 
+	public String hacks() {
+		String info="";
+		if(mirror==true) {
+			if(mirrorDir==1) {
+				info="[/]";
+			}
+			if(mirrorDir==2) {
+				info="[\\]";
+			}
+		}else {
+			info="[X]";
+		}
+
+		return info;
+	}
+
 	@Override
 	public String toString() {
 		String info="";
@@ -56,7 +72,7 @@ public class Cell {
 			info="[S]";
 		}else if(end==true){
 			info="[E]";
-		}else if(mirror==true /*&& found==true*/) {
+		}else if(mirror==true && found==true) {
 			if(mirrorDir==1) {
 				info="[/]";
 			}
@@ -70,18 +86,7 @@ public class Cell {
 		}else{
 			info="[ ]";
 		}
-		
-		/*if(mirror==true ) {
-			if(mirrorDir==1) {
-				info="[/]";
-			}
-			if(mirrorDir==2) {
-				info="[\\]";
-			}
-		}else {
-			info="[ ]";
-		}*/
-		//info="["+row+col+"]";
+
 		return info;
 	}
 
@@ -90,7 +95,7 @@ public class Cell {
 	/**
 	 *Getters and Setters 
 	 */
-	
+
 
 	public char getCol() {
 		return col;

@@ -117,6 +117,10 @@ public class Menu {
 		}
 		if(info.charAt(0)=='L'){
 			gameController.locate(info);
+			System.out.println(gameController.getGameBoard().showBoardScreen(playerName));
+			action();
+		}else if(info.equals("HACKS")){
+			System.out.println(gameController.getGameBoard().showBoardHacked(playerName));
 			action();
 		}else if(info.equals("MENU")){
 			

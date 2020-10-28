@@ -338,8 +338,44 @@ public class Board {
 	}
 	
 	public void locate(int row, char col, int mirDir) {
-		System.out.println(""+row+col+mirDir);
+		Cell colHead=findColumnHead(col,firstCell);
+		Cell located=findCell(row,colHead);
+		if(located.isMirror()==true) {
+			if(mirDir==located.getMirrorDir()) {
+				located.setFound(true);
+			}else {
+				located.setError(2);
+			}
+		}else {
+			located.setError(1);
+		}
+		viewBoard="";
+		printBoard(firstCell,firstCell);
+		
 	}
+	
+	
+	private Cell findColumnHead(char col, Cell current) {
+		Cell head=null;
+		if(col==current.getCol()) {
+			head=current;
+		}else {
+			head=findColumnHead(col,current.getRight());
+		}
+		return head;
+	}
+	
+	private Cell findCell(int row, Cell current) {
+		Cell cell=null;
+		if(row==current.getRow()) {
+			cell=current;
+		}else {
+			cell=findCell(row,current.getDown());
+		}
+		return cell;
+	}
+	
+	
 	public void calculateScore() {}
 	
 	
@@ -352,6 +388,16 @@ public class Board {
 		String info="";
 		int remainingMirrors= mirrors-mirrorsFound;
 		info+= nickname+": "+remainingMirrors+ " mirrors remaining\n";
+		info+=viewBoard;
+		return info;
+		
+	}
+	
+	public String showBoardHacked(String nickname) {
+		String info="";
+		info+= nickname+ " HAS HACKED THE BOARD !!!\n";
+		viewBoard="";
+		printBoardHacks(firstCell,firstCell);
 		info+=viewBoard;
 		return info;
 		
@@ -374,6 +420,19 @@ public class Board {
 		}else if((int)(current.getCol()-64)==columns) {
 			viewBoard+=current+"\n";
 			printBoard(rowHead.getDown(),rowHead.getDown());
+			
+		}
+	}
+	
+	private void printBoardHacks(Cell current, Cell rowHead) {
+		if((int)(current.getCol()-64)==columns && current.getRow()==rows) {
+			viewBoard+=current.hacks()+"\n";
+		}else if((int)(current.getCol()-64)<columns) {
+			viewBoard+=current.hacks();
+			printBoardHacks(current.getRight(),rowHead);
+		}else if((int)(current.getCol()-64)==columns) {
+			viewBoard+=current.hacks()+"\n";
+			printBoardHacks(rowHead.getDown(),rowHead.getDown());
 			
 		}
 	}
