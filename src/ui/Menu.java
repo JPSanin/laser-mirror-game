@@ -119,8 +119,9 @@ public class Menu {
 			gameController.locate(info);
 			System.out.println(gameController.getGameBoard().showBoardScreen(playerName));
 			if(gameController.getGameBoard().checkWin()) {
-				System.out.println("WINNER");
-				System.out.println("Print game Summary");
+				System.out.println("************WINNER************");
+				System.out.println("YOU HAVE FOUND ALL THE MIRRORS");
+				System.out.println(gameController.getGameBoard().printSummary(playerName));
 			}else {
 				action();
 			}
@@ -129,7 +130,7 @@ public class Menu {
 			System.out.println(gameController.getGameBoard().showBoardHacked(playerName));
 			action();
 		}else if(info.equals("MENU")){
-			System.out.println("Print game Summary");
+			System.out.println(gameController.getGameBoard().printSummary(playerName));
 		}
 		
 	}

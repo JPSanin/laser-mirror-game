@@ -402,8 +402,35 @@ public class Board {
 	}
 	
 	
+	/** Method for printing the game summary <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Prints the game summary<br>
+	 * @return summary, String with all game information
+	 */
+	public String printSummary(String nickname) {
+		String summary="";
+		summary+=nickname+"\n";
+		summary+= "Here is your game summary \n";
+		summary+= "Game Board Size: "+ rows+"x"+columns+"\n";
+		summary+= "Total Mirrors: "+mirrors+"\n";
+		summary+= "Mirrors Found: "+mirrorsFound+" of "+mirrors+"\n";
+		summary+= "Total Shots: "+shots+"\n";		
+		summary+= "Total location attempts: "+locates+"\n";	
+		summary+= "Total Errors: "+errors+"\n";	
+		summary+= "Final Score: missing \n";	
+		summary+= "GG "+nickname+" see you next match!\n";	
+		return summary;
+	}
+	
+	
 	public void calculateScore() {}
 	
+	
+	/** Method for checking if the player has won <br>
+	<b> pre: </b> <br>
+	<b> post: </b> Checks if the player has won<br>
+	 * @return win, boolean indicating if he has won
+	 */
 	public boolean checkWin() {
 		boolean win= false;
 		if(mirrorsFound==mirrors) {
@@ -560,6 +587,9 @@ public class Board {
 	public void setViewBoard(String viewBoard) {
 		this.viewBoard = viewBoard;
 	}
+
+
+	
 
 
 
