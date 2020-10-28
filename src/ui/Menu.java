@@ -114,9 +114,10 @@ public class Menu {
 				System.err.println(e);
 			}
 			action();
-		}else if(info.charAt(0)=='L'){
-			gameController.locate();
-			
+		}
+		if(info.charAt(0)=='L'){
+			gameController.locate(info);
+			action();
 		}else if(info.equals("MENU")){
 			
 		}

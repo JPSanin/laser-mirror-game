@@ -200,9 +200,18 @@ public class Board {
 		printBoard(firstCell,firstCell);
 		start.setStart(false);
 		end.setEnd(false);
+		shots++;
 		
 	}
 	
+	/** Method that shoots the laser <br>
+	<b> pre: </b> Found starting cell and entered it as first current<br>
+	<b> post: </b> Finds the end of the shot<br>
+	 * @param current, current cell the shot is at
+	 * @param dir, direction the shot has
+	 * @return end, the cell that the shot comes out of
+	 * 
+	 */
 	private Cell shooter(Cell current, int dir) {
 		Cell end=null;
 		switch(dir) {
@@ -296,6 +305,16 @@ public class Board {
 		return end;
 	}
 	
+	
+	/** Method that finds the starting cell of the shot <br>
+	<b> pre: </b> row and col have to be of a border cell, first current has to be the firstCell<br>
+	<b> post: </b> Finds the end of the shot<br>
+	 * @param row, row of the searched cell
+	 * @param col, column of the searched cell
+	 * @param current, current cell that we are seeing if it is the start
+	 * @return searched, the cell we are looking for on the game border
+	 * 
+	 */
 	private Cell searchBorder(int row, char col, Cell current) {
 		Cell searched=null;
 		if(row==current.getRow()&&col==current.getCol()) {
@@ -318,7 +337,9 @@ public class Board {
 		return searched;
 	}
 	
-	public void locate() {}
+	public void locate(int row, char col, int mirDir) {
+		System.out.println(""+row+col+mirDir);
+	}
 	public void calculateScore() {}
 	
 	

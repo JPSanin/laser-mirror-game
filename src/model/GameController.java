@@ -160,7 +160,22 @@ public class GameController {
 		return info;
 		
 	}
-	public void locate() {}
+	
+	public void locate(String location) {
+		String trimmedLoc=location.substring(1);
+		String info = stringSplitter(trimmedLoc,0);
+		String[] parts= info.split(",");
+		int row= Integer.parseInt(parts[0]);
+		char col= parts[1].charAt(0);
+		int mirDir=0;
+		if(parts[1].charAt(1)=='R'){
+			mirDir=1;
+		}else if(parts[1].charAt(1)=='L') {
+			mirDir=2;
+		}
+		gameBoard.locate(row,col,mirDir);
+
+	}
 	public void addPlayer() {}
 	
 	
