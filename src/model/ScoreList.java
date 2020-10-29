@@ -28,35 +28,55 @@ public class ScoreList {
 		rank=1;
 	}
 	
+	/** Method for adding players<br>
+	
+	<b> pre:score has had to be already calculated </b> <br>
+	<b> post: </b> Adds players to score board<br>
+	 *@param nickname, player nickname
+	 *@param score, the players score 
+	*/
 	public void addPlayer(String nickname, int score) {
 		Player newPlayer= new Player(nickname, score);
 		if(root==null) {
 			root=newPlayer;
 		}else {
-			addEmployee(root,newPlayer);
+			addPlayer(root,newPlayer);
 		}
 		System.out.println("Success");
 	}
 	
-	private void addEmployee(Player current, Player newPlayer) {
+	
+	/** Recursive Method for adding players<br>
+	
+	<b> pre:the first current has to be the root </b> <br>
+	<b> post: </b> Adds players to score board<br>
+	 *@param current, the current player to be added to
+	 *@param newPlayer, player to be added
+	*/
+	private void addPlayer(Player current, Player newPlayer) {
 		if(current.getScore()>newPlayer.getScore()) {
 			if(current.getLeft()==null) {
 				current.setLeft(newPlayer);
 				newPlayer.setFather(current);
 			}else {
-				addEmployee(current.getLeft(),newPlayer);
+				addPlayer(current.getLeft(),newPlayer);
 			}
 		}else {
 			if(current.getRight()==null) {
 				current.setRight(newPlayer);
 				newPlayer.setFather(current);
 			}else {
-				addEmployee(current.getRight(),newPlayer);
+				addPlayer(current.getRight(),newPlayer);
 			}
 		}
 	}
 	
-
+	/**Method for showing the scores<br>
+	
+	<b> pre:</b> <br>
+	<b> post: </b> Shows the leaderboard<br>
+	*@return leaderboard, the String with all the information
+	*/
 	public String printScores() {	
 		leaderboard="";
 		rank=1;
@@ -64,6 +84,12 @@ public class ScoreList {
 		return leaderboard;
 	}
 
+	/**Recursive Method for creating the leaderboard <br>
+	
+	<b> pre:</b> <br>
+	<b> post: </b> Saves the players from greatest to least<br>
+	*@param current, the current player in the ranking 
+	*/
 	private void createLeaderBoard(Player current) {
 		if(current!=null) {
 			createLeaderBoard(current.getRight());

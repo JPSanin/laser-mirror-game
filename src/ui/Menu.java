@@ -55,7 +55,8 @@ public class Menu {
 		System.out.println("Please select an option");
 		System.out.println("1) Play");
 		System.out.println("2) View Scores");
-		System.out.println("3) Exit");
+		System.out.println("3) How to play");
+		System.out.println("4) Exit");
 	}
 	
 	
@@ -79,6 +80,10 @@ public class Menu {
 			mainMenu();
 			break;
 		case "3":
+			showInstructions();
+			mainMenu();
+			break;
+		case "4":
 			System.out.println("Thank you for playing, see you next time :)");
 			break;
 		default:
@@ -89,7 +94,62 @@ public class Menu {
 		}
 		
 	}
+	/** Method for displaying the instructions<br>
 	
+	<b> pre: </b> <br>
+	<b> post: </b> Shows the instructions<br>	
+	 * 
+	*/
+	private void showInstructions() {
+		System.out.println("Instructions");
+		System.out.println("Your objective is to find the mirrors hidden inside the game board,\n"
+				+ "to do so you can shoot a laser from one cell and see where it will come out. \n" + 
+				"\n" + 
+				"To shoot a laser enter the command (ROW+COLUMN) of the cell you would like to shoot from,\n"
+				+ "if the cell is a corner you must add the direction of the shot (ROW+COLUMN+DIRECTION) Rows are numbers,\n"
+				+ "columns are letters and the direction is a letter H for horizontal or V for vertical.\n" + 
+				"\r\n" + 
+				"The starting cell will be marked with an S, and the ending cell will be marked with an E,\n"
+				+ "if the cell is both start and end it will be displayed with an M.\r\n" + 
+				"\r\n" + 
+				"Examples: \r\n" + 
+				"\r\n" + 
+				"[ / ][  ][  ]\r\n" + 
+				"[S][  ][E]\r\n" + 
+				"[  ][  ][   ]\r\n" + 
+				"\r\n" + 
+				"2A the shot will be shot from the cell 2A and will end at cell 2C\r\n" + 
+				"1AH the shot will be marked with an M because the cell is the start and end.\r\n" + 
+				"\r\n" + 
+				"If you think you know where a mirror might be located you can type the command (L+ROW+COLUMN+MIRRORDIRECTION)\n"
+				+ "L is for locating, row is a number, column is a letter, and Mirror direction is either L for left-facing mirror\n"
+				+ "or R for a right-facing mirror. \r\n" + 
+				"\r\n" + 
+				"Example:\r\n" + 
+				"\r\n" + 
+				"[ / ][  ][  ]\r\n" + 
+				"[  ][  ][   ]\r\n" + 
+				"[  ][  ][   ]\r\n" + 
+				"\r\n" + 
+				"L1AR will be a correct location and the gameboard will display it for the rest of the game\r\n" + 
+				"L2AL will be an incorrect location and the game board will show an X in that cell\r\n" + 
+				"L1AL will be a semi correct selection and the game board will display an asterisk (*)\r\n" + 
+				"\r\n" + 
+				"To win you must find all of the mirrors that are hidden.\r\n" + 
+				"\r\n" + 
+				"Scoring:\r\n" + 
+				"Rows + Columns = starter bonus (Ex. 3x3 is a 6 point bonus)\r\n" + 
+				"Each mirror takes away one point\r\n" + 
+				"Each shot takes away 1 point\r\n" + 
+				"Each error takes away 3 points\r\n" + 
+				"Each location attempt takes away one point\r\n" + 
+				"Each mirror found gives 10 points.\r\n" + 
+				"\r\n" + 
+				"Good Luck and Have Fun.\r\n" + 
+				"");
+		
+	}
+
 	/** Method for starting to play the game<br>
 	
 	<b> pre: </b> <br>
