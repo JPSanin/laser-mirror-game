@@ -26,11 +26,11 @@ Eclipse: https://www.eclipse.org/downloads/
 
 ## Project Information 📖
 
-_The game is based on a problem presented by a mirror instute, that works with mazes and lasers,
+The game is based on a problem presented by a mirror instute, that works with mazes and lasers,
 they wanted to test their personnels' knowledge to see if they can hire them. The game gives the
 option to create a cell grid that contains a "k" amount of mirrors, the players objective is to find them
 dpending on the difficulty of the grid, players score will vary. The game has a leader board, and instructions
-to se exactly how to play. Do you think yo are qualified to work at the mirror institute? _
+to see exactly how to play. Do you think you are qualified to work at the mirror institute? 
 
 ## Author ✒️
 
