@@ -42,7 +42,6 @@ public class ScoreList {
 		}else {
 			addPlayer(root,newPlayer);
 		}
-		System.out.println("Success");
 	}
 	
 	

@@ -1,5 +1,11 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import exceptions.*;
 
 /**
@@ -185,8 +191,7 @@ public class GameController {
 	
 	
 	
-	public void addPlayer(String nickname) {
-		int score= gameBoard.getScore();
+	public void addPlayer(String nickname,int score) {
 		scoreBoard.addPlayer(nickname,score);
 	}
 	
@@ -206,7 +211,54 @@ public class GameController {
 		gameBoard.generateBoard();
 		
 	}
+	
+	
+	/** Method for saving score list<br>
+	
+	<b> pre: </b> <br>
+	<b> post: </b> Saves the score list<br>
+	@throws FileNotFoundException
+	*/
+	public void exportData() throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter("data/scoresData.txt");
+		pw.println(scoreBoard.printScores());
+		pw.close();
+	}
 
+	/** Method for importing score list<br>
+	
+	<b> pre: </b> <br>
+	<b> post: </b> Imports the score list<br>
+	@throws IOException
+	*/
+	public void importData() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("data/scoresData.txt"));
+		lineReader(br);
+		br.close();
+	}
+	
+	
+	/** Method for reading saved players<br>
+	
+	<b> pre: </b> <br>
+	<b> post: </b> Reads player information and adds them to tree<br>
+	@throws IOException
+	*/
+	private void lineReader(BufferedReader br) throws IOException {
+		String line=br.readLine();
+		if(line!=null) {
+			if(!line.isEmpty()) {
+				String[] parts1=line.split("\\)");
+				String[] parts2=parts1[1].split(":");
+				String nickname=parts2[0].trim();
+				int score= Integer.parseInt(parts2[1].trim());
+				addPlayer(nickname,score);
+				lineReader(br);	
+			}
+			
+		}
+	}
+	
 	/**
 	 *Getters and Setters 
 	 */

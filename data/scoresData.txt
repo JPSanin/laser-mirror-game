@@ -1,0 +1,6 @@
+1) Sanin: 54
+2) Pedro: 22
+3) Sebas: 17
+4) Carlos: 15
+5) pepe: 0
+

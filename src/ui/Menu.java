@@ -85,6 +85,7 @@ public class Menu {
 			break;
 		case "4":
 			System.out.println("Thank you for playing, see you next time :)");
+			gameController.exportData();
 			break;
 		default:
 			System.out.println("Please enter a valid option");
@@ -183,7 +184,7 @@ public class Menu {
 				System.out.println("YOU HAVE FOUND ALL THE MIRRORS");
 				gameController.getGameBoard().calculateScore();
 				System.out.println(gameController.getGameBoard().printSummary(playerName));
-				gameController.addPlayer(playerName);
+				gameController.addPlayer(playerName, gameController.getGameBoard().getScore());
 			}else {
 				action();
 			}
@@ -194,7 +195,7 @@ public class Menu {
 		}else if(info.equals("MENU")){
 			gameController.getGameBoard().calculateScore();
 			System.out.println(gameController.getGameBoard().printSummary(playerName));
-			gameController.addPlayer(playerName);
+			gameController.addPlayer(playerName, gameController.getGameBoard().getScore());
 		}
 		
 	}
@@ -239,6 +240,11 @@ public class Menu {
 	<b> post: </b> Starts the program<br>	
 	*/
 	public void start() {
+		try {
+			gameController.importData();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		welcome();
 		try {
 			mainMenu();
